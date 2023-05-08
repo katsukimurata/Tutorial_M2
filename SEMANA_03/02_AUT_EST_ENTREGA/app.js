@@ -17,7 +17,7 @@ app.use(express.static("../frontend/"));
 app.use(express.json());
 
 // Retorna todos registros (é o R do CRUD - Read)
-app.get('/usuarios', (req, res) => {
+app.get('/listaFormacao', (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*');
     var db = new sqlite3.Database(modelofísico); // Abre o banco
@@ -32,7 +32,7 @@ app.get('/usuarios', (req, res) => {
 });
 
 // Insere um registro (é o C do CRUD - Create)
-app.post('/insereUsuario', urlencodedParser, (req, res) => {
+app.post('/insereFormacao', urlencodedParser, (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*');
     var db = new sqlite3.Database(modelofísico); // Abre o banco
@@ -49,10 +49,10 @@ app.post('/insereUsuario', urlencodedParser, (req, res) => {
 });
 
 // Monta o formulário para o update (é o U do CRUD - Update)
-app.get('/atualizaUsuario', (req, res) => {
+app.get('/atualizaFormacao', (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*');
-    sql = "SELECT * FROM usuario WHERE userId=" + req.query.userId;
+    sql = "SELECT * FROM pessoa WHERE cpf=" + req.query.cpf;
     console.log(sql);
     var db = new sqlite3.Database(modelofísico); // Abre o banco
     db.all(sql, [], (err, rows) => {
@@ -82,7 +82,7 @@ app.post('/atualizaUsuario', urlencodedParser, (req, res) => {
 });
 
 // Exclui um registro (é o D do CRUD - Delete)
-app.get('/removeUsuario', urlencodedParser, (req, res) => {
+app.get('/removeFormacao', urlencodedParser, (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*');
     sql = "DELETE FROM pessoa WHERE cpf='" + req.query.cpf + "'";
