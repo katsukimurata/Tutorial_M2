@@ -4,14 +4,14 @@ const app = express();
 const hostname = '127.0.0.1';
 const port = 3000;
 const sqlite3 = require('sqlite3').verbose();
-const DBPATH = 'modelofísico.db'; //use o nome que você achar melhor para o banco de dados
+const DBPATH = 'curriculo.db'; // meu banco de dados 
 
 app.use(express.json());
 app.get('/pessoa', (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*');
     var db = new sqlite3.Database(DBPATH); // Abre o banco
-    var sql = 'SELECT cpf, nome, cargo FROM pessoa ORDER BY ';
+    var sql = 'SELECT cpf, nome, cargo FROM pessoa ORDER BY ';        // select na coluna pessoa 
     db.all(sql, [], (err, rows) => {
         if (err) {
             throw err;
@@ -26,7 +26,7 @@ app.get('/informações', (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*');
     var db = new sqlite3.Database(DBPATH); // Abre o banco
-    var sql = 'SELECT cpf, endereço, telefone, email FROM informações ORDER BY cpf DESC';
+    var sql = 'SELECT cpf, endereço, telefone, email FROM informações ORDER BY cpf DESC';  // select na tabela informações 
     db.all(sql, [], (err, rows) => {
         if (err) {
             throw err;
@@ -41,7 +41,7 @@ app.get('/personalidade', (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*');
     var db = new sqlite3.Database(DBPATH); // Abre o banco
-    var sql = 'SELECT descrição FROM personalidade';
+    var sql = 'SELECT descrição FROM personalidade';        //select tabela personalidade 
     db.all(sql, [], (err, rows) => {
         if (err) {
             throw err;
@@ -56,7 +56,7 @@ app.get('/habilidade', (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*');
     var db = new sqlite3.Database(DBPATH); // Abre o banco
-    var sql = 'SELECT descrição FROM habilidade ';
+    var sql = 'SELECT descrição FROM habilidade ';               //select da tabela habilidade 
     db.all(sql, [], (err, rows) => {
         if (err) {
             throw err;
@@ -67,11 +67,11 @@ app.get('/habilidade', (req, res) => {
 });
 
 app.use(express.json());
-app.get('/fromação', (req, res) => {
+app.get('/formação', (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*');
     var db = new sqlite3.Database(DBPATH); // Abre o banco
-    var sql = 'SELECT diploma, curso, ano, instituição FROM formação ORDER BY ano DESC';
+    var sql = 'SELECT diploma, curso, ano, instituição FROM formação ORDER BY ano DESC';        // select da tabela formação 
     db.all(sql, [], (err, rows) => {
         if (err) {
             throw err;
@@ -86,7 +86,7 @@ app.get('/realizações', (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*');
     var db = new sqlite3.Database(DBPATH); // Abre o banco
-    var sql = 'SELECT data, descrição FROM realizações ORDER BY data';
+    var sql = 'SELECT data, descrição FROM realizações ORDER BY data';      // select da tabela realizações 
     db.all(sql, [], (err, rows) => {
         if (err) {
             throw err;
