@@ -5,24 +5,19 @@ CREATE TABLE IF NOT EXISTS "pessoa " (
 	"cargo"	TEXT,
 	PRIMARY KEY("cpf" AUTOINCREMENT)
 );
-CREATE TABLE IF NOT EXISTS "informações" (
-	"cpf"	INTEGER,
-	"endereço"	TEXT,
-	"telefone"	INTEGER,
-	"email"	TEXT,
-	"ref"	INTEGER
-);
 CREATE TABLE IF NOT EXISTS "personalidade" (
 	"cpf"	INTEGER,
 	"descrição "	TEXT,
 	"ref"	TEXT,
-	PRIMARY KEY("cpf")
+	PRIMARY KEY("cpf"),
+	FOREIGN KEY("ref") REFERENCES "informações"("cpf")
 );
 CREATE TABLE IF NOT EXISTS "habilidade" (
 	"cpf"	INTEGER,
 	"descrição"	TEXT,
 	"ref"	BLOB,
-	PRIMARY KEY("cpf")
+	PRIMARY KEY("cpf"),
+	FOREIGN KEY("ref") REFERENCES "informações"("cpf")
 );
 CREATE TABLE IF NOT EXISTS "formação" (
 	"cpf"	INTEGER,
@@ -31,7 +26,8 @@ CREATE TABLE IF NOT EXISTS "formação" (
 	"ano"	NUMERIC,
 	"instituição"	TEXT,
 	"ref"	TEXT,
-	PRIMARY KEY("cpf")
+	PRIMARY KEY("cpf"),
+	FOREIGN KEY("ref") REFERENCES "pessoa"("cpf")
 );
 CREATE TABLE IF NOT EXISTS "realizações" (
 	"cpf"	INTEGER,
@@ -39,7 +35,8 @@ CREATE TABLE IF NOT EXISTS "realizações" (
 	"descrição"	TEXT,
 	""	INTEGER,
 	"ref"	TEXT,
-	PRIMARY KEY("cpf")
+	PRIMARY KEY("cpf"),
+	FOREIGN KEY("ref") REFERENCES "pessoa"("cpf")
 );
 CREATE TABLE IF NOT EXISTS "experiência" (
 	"nome"	INTEGER,
@@ -47,6 +44,16 @@ CREATE TABLE IF NOT EXISTS "experiência" (
 	"ano"	TEXT,
 	"cargo"	TEXT,
 	"ref"	TEXT,
-	PRIMARY KEY("nome")
+	PRIMARY KEY("nome"),
+	FOREIGN KEY("ref") REFERENCES "pessoa"("cpf")
+);
+CREATE TABLE IF NOT EXISTS "informações" (
+	"cpf"	INTEGER,
+	"endereço"	TEXT,
+	"telefone"	INTEGER,
+	"email"	TEXT,
+	"ref"	INTEGER,
+	PRIMARY KEY("cpf"),
+	FOREIGN KEY("ref") REFERENCES "pessoa"("cpf")
 );
 COMMIT;

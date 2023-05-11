@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 const sqlite3 = require('sqlite3').verbose();
-const modelofísico = 'modelofísico.db.sql';
+const DBPATH = "curriculo.db";
 
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -20,8 +20,8 @@ app.use(express.json());
 app.get('/listaFormacao', (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*');
-    var db = new sqlite3.Database(modelofísico); // Abre o banco
-    var sql = 'SELECT * FROM pessoa ORDER BY cpf COLLATE NOCASE';
+    var db = new sqlite3.Database(DBPATH) //Abre o banco
+    var sql = 'SELECT * FROM pessoa ORDER BY cpf ASC';
     db.all(sql, [], (err, rows) => {
         if (err) {
             throw err;
@@ -32,11 +32,11 @@ app.get('/listaFormacao', (req, res) => {
 });
 
 // Insere um registro (é o C do CRUD - Create)
-app.post('/insereFormacao', urlencodedParser, (req, res) => {
+app.post('/inserePessoa', urlencodedParser, (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*');
-    var db = new sqlite3.Database(modelofísico); // Abre o banco
-    sql = "INSERT INTO pessoa (cpf, nome, cargo) VALUES ('" + req.body.cpf + "', '" + req.body.nome + "', " + req.body.cargo + ")";
+    var db = new sqlite3.Database(DBPATH); // Abre o banco
+    sql = "INSERT INTO pessoa (cpf, nome, cargo) VALUES (?, ?, )";
     console.log(sql);
     db.run(sql, [], err => {
         if (err) {
@@ -54,7 +54,7 @@ app.get('/atualizaFormacao', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     sql = "SELECT * FROM pessoa WHERE cpf=" + req.query.cpf;
     console.log(sql);
-    var db = new sqlite3.Database(modelofísico); // Abre o banco
+    var db = new sqlite3.Database(DBPATH); // Abre o banco
     db.all(sql, [], (err, rows) => {
         if (err) {
             throw err;
@@ -70,7 +70,7 @@ app.post('/atualizaUsuario', urlencodedParser, (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     sql = "UPDATE pessoa SET nome='" + req.body.nome + "' , cargo='" + req.body.cargo + "' WHERE cpf='" + req.body.cpf + "'";
     console.log(sql);
-    var db = new sqlite3.Database(modelofísico); // Abre o banco
+    var db = new sqlite3.Database(DBPATH); // Abre o banco
     db.run(sql, [], err => {
         if (err) {
             throw err;
@@ -87,7 +87,7 @@ app.get('/removeFormacao', urlencodedParser, (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     sql = "DELETE FROM pessoa WHERE cpf='" + req.query.cpf + "'";
     console.log(sql);
-    var db = new sqlite3.Database(modelofísico); // Abre o banco
+    var db = new sqlite3.Database(DBPATH); // Abre o banco
     db.run(sql, [], err => {
         if (err) {
             throw err;
