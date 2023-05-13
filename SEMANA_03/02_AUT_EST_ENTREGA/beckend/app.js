@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 const sqlite3 = require('sqlite3').verbose();
-const DBPATH = "curriculo.db";
+const DBPATH = "'../beckend/curriculo.db';";
 
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -17,7 +17,7 @@ app.use(express.static("../frontend/"));
 app.use(express.json());
 
 // Retorna todos registros (é o R do CRUD - Read)
-app.get('/listaFormacao', (req, res) => {
+app.get('/listaPessoa', (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*');
     var db = new sqlite3.Database(DBPATH) //Abre o banco
@@ -49,7 +49,7 @@ app.post('/inserePessoa', urlencodedParser, (req, res) => {
 });
 
 // Monta o formulário para o update (é o U do CRUD - Update)
-app.get('/atualizaFormacao', (req, res) => {
+app.get('/atualizaPessoa', (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*');
     sql = "SELECT * FROM pessoa WHERE cpf=" + req.query.cpf;
@@ -65,7 +65,7 @@ app.get('/atualizaFormacao', (req, res) => {
 });
 
 // Atualiza um registro (é o U do CRUD - Update)
-app.post('/atualizaUsuario', urlencodedParser, (req, res) => {
+app.post('/atualizaPessoa', urlencodedParser, (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*');
     sql = "UPDATE pessoa SET nome='" + req.body.nome + "' , cargo='" + req.body.cargo + "' WHERE cpf='" + req.body.cpf + "'";
@@ -82,7 +82,7 @@ app.post('/atualizaUsuario', urlencodedParser, (req, res) => {
 });
 
 // Exclui um registro (é o D do CRUD - Delete)
-app.get('/removeFormacao', urlencodedParser, (req, res) => {
+app.get('/removePessoa', urlencodedParser, (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*');
     sql = "DELETE FROM pessoa WHERE cpf='" + req.query.cpf + "'";

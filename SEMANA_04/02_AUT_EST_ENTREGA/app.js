@@ -4,7 +4,7 @@ const app = express();
 const hostname = '127.0.0.1';
 const port = 3000;
 const sqlite3 = require('sqlite3').verbose();
-const DBPATH = 'curriculo.db'; // meu banco de dados 
+const DBPATH = "'../02_AUT_EST_ENTREGA/curriculo.db';" // meu banco de dados 
 
 app.use(express.json());
 app.get('/pessoa', (req, res) => {
